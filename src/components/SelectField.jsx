@@ -8,11 +8,11 @@ export default function SelectFields(props) {
     <Box
       component="form"
       sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' }
+        '& .MuiTextField-root': { m: 1, width: '50ch' }
       }}
       noValidate
       autoComplete="off">
-      <TextField select label="Select" value={props.value} onChange={props.onChange}>
+      <TextField select label={props.label} value={props.value} onChange={props.onChange}>
         {props.children}
       </TextField>
     </Box>
@@ -21,6 +21,7 @@ export default function SelectFields(props) {
 
 SelectFields.propTypes = {
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.string,
-  children: PropTypes.node
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  children: PropTypes.node,
+  label: PropTypes.string.isRequired
 };

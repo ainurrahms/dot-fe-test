@@ -1,63 +1,115 @@
-import React from 'react';
-import Button from '../components/Button';
+import React, { useEffect, useState } from 'react';
 import SelectField from '../components/SelectField';
 import MenuItem from '@mui/material/MenuItem';
-
-const currencies = [
-  {
-    value: 'USD',
-    label: '$'
-  },
-  {
-    value: 'EUR',
-    label: '€'
-  },
-  {
-    value: 'BTC',
-    label: '฿'
-  },
-  {
-    value: 'JPY',
-    label: '¥'
-  }
-];
-
-const onClick = () => {
-  console.log('halo');
-};
+import Buttons from '../components/Button';
+import { useNavigate } from 'react-router-dom';
 
 export default function Homepage() {
-  const [currency, setCurrency] = React.useState('EUR');
+  const [error, setError] = useState(null);
+  const [list, setList] = useState([]);
+  const [listCity, setListCity] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [selectedProvince, setProvince] = useState('');
+  const [selectedCity, setCity] = useState('');
+  const navigate = useNavigate();
 
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    fetch('https://dev.farizdotid.com/api/daerahindonesia/provinsi', requestOptions)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setList(result.provinsi);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      )
+      .catch((error) => {
+        console.error('error fetching data', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    fetch(
+      'https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=' + selectedProvince,
+      requestOptions
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+          setIsLoaded(true);
+          setListCity(result.kota_kabupaten);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      )
+      .catch((error) => {
+        console.error('error fetching data', error);
+      });
+  }, [selectedProvince]);
+
+  const handleChangeProvince = (event) => {
+    setProvince(event.target.value);
   };
 
-  return (
-    <div className="App">
-      <header>
-        <p>Calculate Cost</p>
-        <div>
-          <SelectField value={currency} onChange={handleChange}>
-            {currencies.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </SelectField>
-          <SelectField value={currency} onChange={handleChange}>
-            {currencies.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </SelectField>
+  const handleChangeCity = (event) => {
+    setCity(event.target.value);
+  };
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  } else if (!isLoaded) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <div className="App">
+        <header>
+          <p>Pilih Daerah</p>
           <div>
-            <Button onClick={onClick} variant="contained" text="back" />
-            <Button onClick={onClick} variant="contained" text="calculate" />
+            <SelectField
+              label={'Pilih Provinsi'}
+              value={selectedProvince}
+              onChange={handleChangeProvince}>
+              {list.map((option) => (
+                <MenuItem key={option?.id} value={option?.id}>
+                  {option?.nama}
+                </MenuItem>
+              ))}
+            </SelectField>
+            <SelectField label={'Pilih Kota'} value={selectedCity} onChange={handleChangeCity}>
+              {listCity.map((option) => (
+                <MenuItem key={option?.id} value={option?.nama}>
+                  {option?.nama}
+                </MenuItem>
+              ))}
+            </SelectField>
           </div>
-        </div>
-      </header>
-    </div>
-  );
+          <Buttons
+            onClick={() => {
+              navigate('/');
+            }}
+            variant="contained"
+            text="back"
+          />
+        </header>
+      </div>
+    );
+  }
 }

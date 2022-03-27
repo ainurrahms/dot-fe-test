@@ -9,9 +9,9 @@ export default function Login() {
   return (
     <div className="App">
       <header>
-        <p>Welcome to Get Price</p>
+        <p>Welcome to Multipledropdown City</p>
         <div>
-          <TextField id="outlined-basic" label="Username" />
+          <TextField id="outlined-basic" label="Email" />
           <TextField id="outlined-basic" label="Password" />
           <Button
             onClick={() => {
