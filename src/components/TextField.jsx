@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import PropTypes from 'prop-types';
 
-export default function TextFields({ id, label }) {
+export default function TextFields(props) {
   return (
     <Box
       component="form"
@@ -12,7 +12,7 @@ export default function TextFields({ id, label }) {
       }}
       noValidate
       autoComplete="off">
-      <TextField id={id} label={label} variant="outlined" />
+      <TextField id={props.id} label={props.label} variant="outlined" />
     </Box>
   );
 }

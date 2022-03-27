@@ -1,4 +1,5 @@
 import './App.css';
+import Button from './components/Button';
 import TextField from './components/TextField';
 
 function App() {
@@ -7,8 +8,11 @@ function App() {
       <header>
         <p>Welcome to Get Price</p>
         <p>You Must Login</p>
-        <TextField id="outlined-basic" label="Username" />
-        <TextField id="outlined-basic" label="Password" />
+        <div>
+          <TextField id="outlined-basic" label="Username" />
+          <TextField id="outlined-basic" label="Password" />
+          <Button variant="contained" text="login" />
+        </div>
       </header>
     </div>
   );
