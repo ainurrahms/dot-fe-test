@@ -4,7 +4,7 @@ import TextField from '../components/TextField';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className="App">
@@ -15,7 +15,7 @@ export default function Login() {
           <TextField id="outlined-basic" label="Password" />
           <Button
             onClick={() => {
-              navigate('/homepage');
+              navigate('/calc');
             }}
             variant="contained"
             text="login"
