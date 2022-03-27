@@ -1,20 +1,16 @@
 import './App.css';
-import Button from './components/Button';
-import TextField from './components/TextField';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './pages/Login';
+import { Homepage } from './pages/Homepage';
 
 function App() {
   return (
-    <div className="App">
-      <header>
-        <p>Welcome to Get Price</p>
-        <p>You Must Login</p>
-        <div>
-          <TextField id="outlined-basic" label="Username" />
-          <TextField id="outlined-basic" label="Password" />
-          <Button variant="contained" text="login" />
-        </div>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/homepage" element={<Homepage />} />
+      </Routes>
+    </Router>
   );
 }
 
