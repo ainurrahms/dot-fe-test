@@ -8,6 +8,7 @@ function App() {
         <p>Welcome to Get Price</p>
         <p>You Must Login</p>
         <TextField id="outlined-basic" label="Username" />
+        <TextField id="outlined-basic" label="Password" />
       </header>
     </div>
   );

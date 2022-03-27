@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import PropTypes from 'prop-types';
 
-export default function BasicTextFields({ id, label }) {
+export default function TextFields({ id, label }) {
   return (
     <Box
       component="form"
@@ -17,7 +17,7 @@ export default function BasicTextFields({ id, label }) {
   );
 }
 
-BasicTextFields.propTypes = {
+TextFields.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired
 };
