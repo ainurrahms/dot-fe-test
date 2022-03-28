@@ -51,7 +51,6 @@ export default function Homepage() {
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log(result);
           setIsLoaded(true);
           setListCity(result.kota_kabupaten);
         },
